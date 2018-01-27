@@ -19,6 +19,8 @@ additional_claims = {
   'premiumAccount': True
 }
 
+auth = firebase.auth()
+
 token = auth.create_custom_token("test", additional_claims)
 user = auth.sign_in_with_custom_token(token)
 uid = user['idToken']

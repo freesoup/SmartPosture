@@ -11,7 +11,7 @@ def loopAction(msg):
     keyboard = ReplyKeyboardMarkup(keyboard = [
         [KeyboardButton(text = "/on"), KeyboardButton(text = "/off")],[ KeyboardButton(text = "/retakepicture"),
          KeyboardButton(text = "/mrjonathan")]
-        ], one_time_keyboard = True
+        ], one_time_keyboard = True, resize_keyboard = True
     )
     
     if content_type == 'text':
@@ -22,9 +22,7 @@ def loopAction(msg):
             telegram_bot.sendMessage(user_id, "Hi Sanyong")
         elif command == "/mrjonathan":
             telegram_bot.sendMessage(user_id, "ITS JON CENA!!!!!!!!!!!!!!!!!")
-            telegram_bot.sendPhoto(user_id, photo = "https://upload.wikimedia.org/wikipedia/commons/7/77/John_Cena_May_2016.jpg") 
-        elif command == "/reset":
-
+            telegram_bot.sendPhoto(user_id, photo = "https://upload.wikimedia.org/wikipedia/commons/7/77/John_Cena_May_2016.jpg")
         elif command == "/bot":
             telegram_bot.sendMessage(user_id, "Please select an option", reply_markup = keyboard, )
                                      

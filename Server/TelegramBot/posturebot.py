@@ -5,25 +5,39 @@ from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton
 
 now = datetime.datetime.now()
 
+
 def loopAction(msg):
     content_type, chat_type, user_id = telepot.glance(msg)
 
-    keyboard = ReplyKeyboardMarkup(keyboard = [
-        [KeyboardButton(text = "/on"), KeyboardButton(text = "/off")],[ KeyboardButton(text = "/retakepicture"),
-         KeyboardButton(text = "/mrjonathan")]
+    keyboard = ReplyKeyboardMarkup(keyboard = 
+        [KeyboardButton(text = "/setup"), KeyboardButton(text = "/calibrate")
         ], one_time_keyboard = True, resize_keyboard = True
     )
     
     if content_type == 'text':
         command = msg['text']
+        commandls =[]
         print(user_id)
 
-        if command == "/mrsanyong":
-            telegram_bot.sendMessage(user_id, "Hi Sanyong")
-        elif command == "/mrjonathan":
-            telegram_bot.sendMessage(user_id, "ITS JON CENA!!!!!!!!!!!!!!!!!")
-            telegram_bot.sendPhoto(user_id, photo = "https://upload.wikimedia.org/wikipedia/commons/7/77/John_Cena_May_2016.jpg")
-        elif command == "/bot":
+        #splitting to setup camera number
+        commandls = command.split()
+
+        #startup message with prompt for camera id
+        if commandls[0] == "/start":
+            telegram_bot.sendMessage(user_id, "To calibrate: /setup CameraNum")
+        elif commandls[0] == "/setup":
+            #assign camera id to firebase 
+            cameraId = commandls[1]
+            #verify if cameraId contains all numbers
+            if cameraId.isdigit():
+                telegram_bot.sendMessage(user_id, "Camera ID verified")
+            else:
+                telegram_bot.sendMessage(user_id, "Camera ID verification error")
+        #to reset reference image
+        elif commandls[0] == "/calibrate":
+            #run Jackie's script to ping firebase
+        #keyboard setting
+        else command[0] == "/bot":
             telegram_bot.sendMessage(user_id, "Please select an option", reply_markup = keyboard, )
                                      
 

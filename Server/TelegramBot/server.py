@@ -20,6 +20,13 @@ def requestTakePic(childName):
 
     db.child(users).child(childName).update({"calibrate":True}, uid)
 
-    
-    
+def getConfig():
+    config = {}
+    f = open("../../Camera/config.txt", "r")
+    for line in f:
+    pair = line.split(':', 1)
+    config[pair[0]] = pair[1].split('\n')[0]
+    f.close()
+    return config
+
     

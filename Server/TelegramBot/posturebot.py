@@ -20,11 +20,11 @@ def loopAction(msg):
 
         if command == "/mrsanyong":
             telegram_bot.sendMessage(user_id, "Hi Sanyong")
-        elif command == "/mrjesandry":
-            telegram_bot.sendMessage(user_id, "Hi retard")
         elif command == "/mrjonathan":
             telegram_bot.sendMessage(user_id, "ITS JON CENA!!!!!!!!!!!!!!!!!")
             telegram_bot.sendPhoto(user_id, photo = "https://upload.wikimedia.org/wikipedia/commons/7/77/John_Cena_May_2016.jpg") 
+        elif command == "/reset":
+
         elif command == "/bot":
             telegram_bot.sendMessage(user_id, "Please select an option", reply_markup = keyboard, )
                                      

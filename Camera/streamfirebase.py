@@ -2,20 +2,25 @@ import pyrebase
 import _thread
 import time
 
+db = None
+
 def initCamera(userID, cameraID):
 	user = userID + "," + cameraID
 
 def stream_handler(message):
+	global db
 	try:
 		if message['event'] == 'put':
 			path = message['path'].split(',')[1].split('/')[0]
 			#hard coded camera ID
-			if path == '12':
+			if path == '12' and message['data'] == 'True':
 				take_picture(False)
+				data = {"calibrate": "False"}
+				db.child("users").child(message['path'].split(',')[0].split('/')[1] + ',' + path).set(data)
 	except Exception as e:
 		pass
 
-def run_stream():
+def run_stream(db):
 	my_stream = db.child("users").stream(stream_handler)
 
 def check_posture():
@@ -47,6 +52,7 @@ def main():
 	f.close()
 
 	firebase = pyrebase.initialize_app(config)
+	global db
 	db = firebase.database()
 	storage = firebase.storage()
 	additional_claims = {
@@ -58,7 +64,7 @@ def main():
 	uid = user['idToken']
 
 	try:
-	   _thread.start_new_thread(run_stream, ())
+	   _thread.start_new_thread(run_stream, (db,))
 	   #_thread.start_new_thread(check_posture, ())
 	except:
 	   print ("Error: unable to start thread")

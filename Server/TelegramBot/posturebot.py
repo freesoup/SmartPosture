@@ -2,12 +2,15 @@ import time, datetime
 import telepot
 from telepot.loop import MessageLoop
 from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton
-import server.py
+from server import requestTakePic
+from server import requestNewUser
 
 now = datetime.datetime.now()
 
+cameraId = 0
 
 def loopAction(msg):
+    global cameraId
     content_type, chat_type, user_id = telepot.glance(msg)
 
     keyboard = ReplyKeyboardMarkup(keyboard = 
@@ -32,14 +35,19 @@ def loopAction(msg):
             #verify if cameraId contains all numbers
             if cameraId.isdigit():
                 telegram_bot.sendMessage(user_id, "Camera ID verified")
+                data = {"calibrate":False, "image":False, "seat_exceeded":False, "timer":0}
+                requestNewUser(str(user_id) + "," + cameraId, data)
             else:
                 telegram_bot.sendMessage(user_id, "Camera ID verification error")
         #to reset reference image
         elif commandls[0] == "/calibrate":
-            requestTakePhoto(user_id + "," + cameraId)
-            #run Jackie's script to ping firebase
+            if cameraId!=0:
+                requestTakePic(str(user_id) + "," + cameraId)
+                #run Jackie's script to ping firebase
+            else:
+                telegram_bot.sendMessage(user_id, "no camera")
         #keyboard setting
-        else command[0] == "/bot":
+        elif commandls[0] == "/bot":
             telegram_bot.sendMessage(user_id, "Please select an option", reply_markup = keyboard, )
                                      
 

@@ -2,19 +2,17 @@ import pyrebase
 import _thread
 import time
 
-config = {
-  "apiKey": "AIzaSyDBqip-V77GxAq_b2FWEJ51EBSfuWpSDo0",
-  "authDomain": "hacknr-a5b65.firebaseapp.com",
-  "databaseURL": "https://hacknr-a5b65.firebaseio.com/",
-  "storageBucket": "hacknr-a5b65.appspot.com"
-}
+config = {}
+
+f = open("config.txt", "r")
+for line in f:
+	pair = line.split(':', 1)
+	config[pair[0]] = pair[1].split('\n')[0]
+f.close()
 
 firebase = pyrebase.initialize_app(config)
 
 db = firebase.database()
-
-#data = {"action":"Nothing"}
-#db.child("users").child("123,12").set(data)
 
 def stream_handler(message):
 	try:
@@ -22,7 +20,7 @@ def stream_handler(message):
 			path = message['path'].split(',')[1].split('/')[0]
 			if path == '12':
 				print (message['data'])
-	except:
+	except Exception as e:
 		pass
 
 def run_stream():
@@ -33,7 +31,7 @@ def take_picture():
 		try:
 			print ('test')
 			time.sleep(5)
-		except:
+		except Exception as e:
 			time.sleep(2)
 			print ('test')
 
@@ -45,7 +43,5 @@ except:
    
 while 1:
    pass
-	
-
-	
-	
+   
+   

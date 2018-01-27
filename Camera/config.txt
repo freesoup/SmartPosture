@@ -1,0 +1,5 @@
+apiKey:AIzaSyDBqip-V77GxAq_b2FWEJ51EBSfuWpSDo0
+authDomain:hacknr-a5b65.firebaseapp.com
+databaseURL:https://hacknr-a5b65.firebaseio.com/
+storageBucket:hacknr-a5b65.appspot.com
+serviceAccount:hacknroll-7730581f5522.json

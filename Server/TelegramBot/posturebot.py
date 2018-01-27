@@ -2,6 +2,7 @@ import time, datetime
 import telepot
 from telepot.loop import MessageLoop
 from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton
+import server.py
 
 now = datetime.datetime.now()
 
@@ -35,6 +36,7 @@ def loopAction(msg):
                 telegram_bot.sendMessage(user_id, "Camera ID verification error")
         #to reset reference image
         elif commandls[0] == "/calibrate":
+            requestTakePhoto(user_id + "," + cameraId)
             #run Jackie's script to ping firebase
         #keyboard setting
         else command[0] == "/bot":
